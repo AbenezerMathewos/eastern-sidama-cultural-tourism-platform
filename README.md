@@ -1,2 +1,2 @@
 # eastern-sidama-cultural-tourism-platform
-Community-led cultural tourism platform built with React, Node.js, Express, and MongoDB.
+Community-led Cultural Tourism Platform is a full-stack web application that connects local communities in Eastern Sidama with travelers. Built with React, Node.js, Express.js, and MongoDB, it enables communities to showcase cultural attractions, traditions, accommodations, and local experiences while allowing visitors to explore destinations and make inquiries.
