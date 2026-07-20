@@ -8,7 +8,7 @@ module.exports = class Email {
     this.firstName = user.name.split(' ')[0];
     this.url = url;
     this.from = `Hulet Fish <${process.env.EMAIL_FROM ||
-      'noreply@huletfish.com'}>`;
+      'noreply@easternsidama.com'}>`;
   }
 
   newTransport() {

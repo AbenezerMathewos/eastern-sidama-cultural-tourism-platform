@@ -152,7 +152,7 @@ const Contact = () => {
                         <div>
                           <h3 className="font-semibold mb-1">Address</h3>
                           <p className="text-muted-foreground">
-                            Bensa Daye, Eastern Sidama
+                            Eastern Sidama
                             <br />
                             Ethiopia
                           </p>

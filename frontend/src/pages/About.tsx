@@ -1,9 +1,9 @@
-import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Users, Award, Globe } from "lucide-react";
+import { Award, Globe, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const About = () => {
@@ -32,7 +32,7 @@ const About = () => {
                 </h2>
                 <div className="space-y-4 text-muted-foreground leading-relaxed">
                   <p>
-                    HuletFish is an Experience Booking Platform that empowers local hosts to share their 
+                    Visit Sidama is an Experience Booking Platform that empowers local hosts to share their 
                     culture and traditions with travelers from around the world. We've built a marketplace 
                     where anyone can apply to become a host and create authentic home-based experiences.
                   </p>
@@ -144,7 +144,7 @@ const About = () => {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" size="xl" className="bg-background/10 backdrop-blur-sm text-primary-foreground border-primary-foreground/30 hover:bg-background/20">
-                    <a href="mailto:hello@huletfish.com">
+                    <a href="mailto:hello@visiitsidama.com">
                       Contact Us
                     </a>
                   </Button>
