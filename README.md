@@ -12,6 +12,7 @@ Community-Led Cultural Tourism Platform is a full-stack web application develope
 - Community profile management
 - Tourism information management
 - Search and filtering
+- Personal Wishlist & Saved Experiences (bookmark and manage favorite cultural tours)
 - Responsive design
 - Admin dashboard for managing tourism content
 
