@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
+import CulturalMap from "@/components/CulturalMap";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -345,22 +346,13 @@ const TourDetail = () => {
 
           <div className="space-y-6">
             <Card className="overflow-hidden border-2 shadow-sm">
-              <div className="bg-slate-100 h-64 flex items-center justify-center relative">
-                {mapLocation ? (
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    loading="lazy"
-                    title="Experience Map"
-                    src={`https://maps.google.com/maps?q=${encodeURIComponent(mapLocation)}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
-                  ></iframe>
-                ) : (
-                  <div className="text-center p-4">
-                    <MapIcon className="mx-auto mb-2 text-slate-400" />
-                    <p className="text-xs text-slate-500">Location map unavailable</p>
-                  </div>
-                )}
+              <div className="h-64 relative bg-muted">
+                <CulturalMap
+                  experiences={[experience]}
+                  selectedExperienceId={experience._id || id}
+                  height="100%"
+                  zoom={12}
+                />
               </div>
               <CardContent className="p-4 bg-white border-t">
                 <div className="flex items-start justify-between gap-3">
