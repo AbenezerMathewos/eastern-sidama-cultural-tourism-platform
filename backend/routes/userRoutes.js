@@ -18,6 +18,12 @@ router.get('/me', userController.getMe, userController.getUser);
 router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
+// Wishlist routes
+router.get('/wishlist', userController.getWishlist);
+router.post('/wishlist/toggle/:experienceId', userController.toggleWishlist);
+router.post('/wishlist/:experienceId', userController.addToWishlist);
+router.delete('/wishlist/:experienceId', userController.removeFromWishlist);
+
 // Guide management routes
 router.get('/guides', userController.getAllGuides);
 router.get('/guides/:guideId/hosts', userController.getAssignedHosts);
