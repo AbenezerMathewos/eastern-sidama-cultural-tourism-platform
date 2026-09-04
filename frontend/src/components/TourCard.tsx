@@ -1,11 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { bookingsAPI } from "@/lib/api"; 
+import { bookingsAPI, wishlistAPI } from "@/lib/api"; 
 import { resolveMediaUrl } from "@/lib/media";
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Heart, Star } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface TourCardProps {
   tour: {
@@ -20,20 +22,33 @@ interface TourCardProps {
     summary: string;
     imageCover: string;
   };
+  initialWishlisted?: boolean;
+  onWishlistChange?: (tourId: string, isSaved: boolean) => void;
 }
 
-const TourCard = ({ tour }: TourCardProps) => {
+const TourCard = ({ tour, initialWishlisted, onWishlistChange }: TourCardProps) => {
   const [available, setAvailable] = useState<number | null>(null);
+  const [isWishlisted, setIsWishlisted] = useState<boolean>(!!initialWishlisted);
+  const [isTogglingWishlist, setIsTogglingWishlist] = useState<boolean>(false);
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const tourId = String(tour._id ?? tour.id ?? "");
   const fallbackImage = "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=600";
+
+  useEffect(() => {
+    if (initialWishlisted !== undefined) {
+      setIsWishlisted(initialWishlisted);
+    }
+  }, [initialWishlisted]);
 
   useEffect(() => {
     const load = async () => {
       // Logic check to ensure ID exists before calling API
-      const tourId = tour._id ?? tour.id;
       if (!tourId) return;
 
       try {
-        const resp = await bookingsAPI.getAvailability(String(tourId));
+        const resp = await bookingsAPI.getAvailability(tourId);
         const data = resp?.data || resp;
         const a = data?.data || data;
         setAvailable(typeof a?.available === 'number' ? a.available : null);
@@ -42,7 +57,52 @@ const TourCard = ({ tour }: TourCardProps) => {
       }
     };
     load();
-  }, [tour._id, tour.id]);
+  }, [tourId]);
+
+  const handleWishlistClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign in required",
+        description: "Please log in to save experiences to your wishlist.",
+      });
+      navigate("/login");
+      return;
+    }
+
+    if (!tourId || isTogglingWishlist) return;
+
+    setIsTogglingWishlist(true);
+    const nextState = !isWishlisted;
+    setIsWishlisted(nextState);
+
+    try {
+      const resp = await wishlistAPI.toggleWishlist(tourId);
+      const serverState = resp?.inWishlist ?? nextState;
+      setIsWishlisted(serverState);
+      if (onWishlistChange) {
+        onWishlistChange(tourId, serverState);
+      }
+      toast({
+        title: serverState ? "Saved to Wishlist" : "Removed from Wishlist",
+        description: serverState
+          ? `Added "${tour.title}" to your saved experiences.`
+          : `Removed "${tour.title}" from your wishlist.`,
+      });
+    } catch (err: any) {
+      setIsWishlisted(!nextState);
+      toast({
+        title: "Wishlist update failed",
+        description:
+          err.response?.data?.message || "Could not update wishlist. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsTogglingWishlist(false);
+    }
+  };
 
   return (
     <motion.div
@@ -62,6 +122,22 @@ const TourCard = ({ tour }: TourCardProps) => {
                 (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=600";
               }}
             />
+            <button
+              type="button"
+              onClick={handleWishlistClick}
+              disabled={isTogglingWishlist}
+              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              className="absolute top-3 right-3 p-2 rounded-full bg-background/80 hover:bg-background text-foreground backdrop-blur-md shadow-md transition-all duration-200 hover:scale-110 active:scale-95 z-10"
+            >
+              <Heart
+                className={`w-4 h-4 transition-colors ${
+                  isWishlisted
+                    ? "fill-rose-500 text-rose-500"
+                    : "text-muted-foreground hover:text-rose-500"
+                }`}
+              />
+            </button>
           </div>
 
           <CardContent className="p-4">
