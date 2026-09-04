@@ -3,13 +3,15 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import TourCard from "@/components/TourCard";
 import PageHeader from "@/components/PageHeader";
-import { Loader2, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import CulturalMap from "@/components/CulturalMap";
+import { Loader2, AlertCircle, ChevronLeft, ChevronRight, LayoutGrid, Map as MapIcon } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { experiencesAPI } from "@/lib/api";
 import { motion } from "framer-motion";
 
 const Tours = () => {
+  const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
   const [sort, setSort] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const limit = 8; // Fixed limit - 8 per page
@@ -96,28 +98,57 @@ const Tours = () => {
                 experience
                 {filteredExperiences.length !== 1 ? "s" : ""}
               </p>
-              <div className="flex items-center gap-3">
-                <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap">
-                  Sort by:
-                </label>
-                <Select value={sort || "default"} onValueChange={(value) => setSort(value === "default" ? "" : value)}>
-                  <SelectTrigger id="sort" className="w-[180px]">
-                    <SelectValue placeholder="Default" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="default">Default</SelectItem>
-                    <SelectItem value="-ratingsAverage,price">Top Rated</SelectItem>
-                    <SelectItem value="price">Price: Low to High</SelectItem>
-                    <SelectItem value="-price">Price: High to Low</SelectItem>
-                    <SelectItem value="-createdAt">Newest First</SelectItem>
-                  </SelectContent>
-                </Select>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-1 border border-border rounded-lg p-1 bg-muted/40">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant={viewMode === "grid" ? "secondary" : "ghost"}
+                    className="h-8 px-3 text-xs gap-1.5 shadow-none"
+                    onClick={() => setViewMode("grid")}
+                  >
+                    <LayoutGrid className="w-3.5 h-3.5" />
+                    Grid
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant={viewMode === "map" ? "secondary" : "ghost"}
+                    className="h-8 px-3 text-xs gap-1.5 shadow-none"
+                    onClick={() => setViewMode("map")}
+                  >
+                    <MapIcon className="w-3.5 h-3.5" />
+                    Map View
+                  </Button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap hidden sm:inline">
+                    Sort by:
+                  </label>
+                  <Select value={sort || "default"} onValueChange={(value) => setSort(value === "default" ? "" : value)}>
+                    <SelectTrigger id="sort" className="w-[170px] h-9">
+                      <SelectValue placeholder="Default" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="default">Default</SelectItem>
+                      <SelectItem value="-ratingsAverage,price">Top Rated</SelectItem>
+                      <SelectItem value="price">Price: Low to High</SelectItem>
+                      <SelectItem value="-price">Price: High to Low</SelectItem>
+                      <SelectItem value="-createdAt">Newest First</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
             {isLoading ? (
               <div className="flex justify-center items-center py-32">
                 <Loader2 className="w-12 h-12 animate-spin text-primary" />
+              </div>
+            ) : viewMode === "map" ? (
+              <div className="space-y-4">
+                <CulturalMap experiences={filteredExperiences} height="650px" />
               </div>
             ) : (
               <>
