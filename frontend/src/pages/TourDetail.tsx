@@ -21,11 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { bookingsAPI, experienceGuidesAPI, experiencesAPI, reviewsAPI } from "@/lib/api";
+import { bookingsAPI, experienceGuidesAPI, experiencesAPI, reviewsAPI, wishlistAPI } from "@/lib/api";
 import { resolveMediaUrl } from "@/lib/media";
 import {
   ArrowLeft,
   Check,
+  Heart,
   Loader2,
   Map as MapIcon,
   MessageSquare,
@@ -56,6 +57,8 @@ const TourDetail = () => {
   const [availableGuides, setAvailableGuides] = useState<any[]>([]);
   const [guideRequirement, setGuideRequirement] = useState<string>("optional");
   const [selectedGuideId, setSelectedGuideId] = useState<string>("");
+  const [isWishlisted, setIsWishlisted] = useState<boolean>(false);
+  const [isTogglingWishlist, setIsTogglingWishlist] = useState<boolean>(false);
 
   // 1. Fetch Experience and Availability
   useEffect(() => {
@@ -113,6 +116,62 @@ const TourDetail = () => {
     };
     checkUserStatus();
   }, [experience, isAuthenticated, id, user]);
+
+  // 3. Check Wishlist Status
+  useEffect(() => {
+    const checkWishlistStatus = async () => {
+      if (!isAuthenticated || !id) return;
+      try {
+        const res = await wishlistAPI.getWishlist();
+        const list = res?.data?.wishlist || [];
+        const found = list.some(
+          (item: any) => String(item._id || item.id) === String(id)
+        );
+        setIsWishlisted(found);
+      } catch (err) {
+        // silent fail
+      }
+    };
+    checkWishlistStatus();
+  }, [id, isAuthenticated]);
+
+  const handleWishlistToggle = async () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign in required",
+        description: "Please log in to save experiences to your wishlist.",
+      });
+      return navigate("/login");
+    }
+
+    if (!id || isTogglingWishlist) return;
+
+    setIsTogglingWishlist(true);
+    const nextState = !isWishlisted;
+    setIsWishlisted(nextState);
+
+    try {
+      const resp = await wishlistAPI.toggleWishlist(id);
+      const serverState = resp?.inWishlist ?? nextState;
+      setIsWishlisted(serverState);
+      toast({
+        title: serverState ? "Saved to Wishlist" : "Removed from Wishlist",
+        description: serverState
+          ? `Added "${experience?.title || "Experience"}" to your wishlist.`
+          : `Removed "${experience?.title || "Experience"}" from your wishlist.`,
+      });
+    } catch (err: any) {
+      setIsWishlisted(!nextState);
+      toast({
+        title: "Update failed",
+        description:
+          err.response?.data?.message || "Could not update wishlist.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsTogglingWishlist(false);
+    }
+  };
 
   // FIXED: handleBooking logic to prevent "Payment Initialization Failed"
   // UPDATED: handleBooking logic for Mock/Bypass Mode
@@ -222,9 +281,21 @@ const TourDetail = () => {
     <div className="min-h-screen bg-slate-50/50">
       <Navigation />
       <main className="container mx-auto px-4 pt-28 pb-20">
-        <Button asChild variant="ghost" className="mb-8">
-          <Link to="/experiences"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Tours</Link>
-        </Button>
+        <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
+          <Button asChild variant="ghost">
+            <Link to="/experiences"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Tours</Link>
+          </Button>
+          <Button
+            type="button"
+            variant={isWishlisted ? "secondary" : "outline"}
+            onClick={handleWishlistToggle}
+            disabled={isTogglingWishlist}
+            className="gap-2 shadow-sm"
+          >
+            <Heart className={`w-4 h-4 transition-colors ${isWishlisted ? "fill-rose-500 text-rose-500" : "text-muted-foreground"}`} />
+            <span>{isWishlisted ? "Saved in Wishlist" : "Save to Wishlist"}</span>
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2 space-y-8">
