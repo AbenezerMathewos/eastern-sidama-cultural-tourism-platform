@@ -102,7 +102,13 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
     select: false
-  }
+  },
+  wishlist: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Experience'
+    }
+  ]
 });
 
 // Host payout banking (CBE-only)
