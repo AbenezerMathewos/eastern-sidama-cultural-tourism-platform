@@ -35,6 +35,7 @@ import NotFound from "./pages/NotFound";
 import Wallet from "./pages/Wallet";
 import MyWithdrawals from "./pages/MyWithdrawals";
 import AdminPayouts from "./pages/AdminPayouts";
+import Wishlist from "./pages/Wishlist";
 
 const queryClient = new QueryClient();
 
@@ -174,6 +175,22 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <MyReviews />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/my-wishlist"
+              element={
+                <ProtectedRoute>
+                  <Wishlist />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/wishlist"
+              element={
+                <ProtectedRoute>
+                  <Wishlist />
                 </ProtectedRoute>
               }
             />

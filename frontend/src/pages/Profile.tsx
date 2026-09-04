@@ -231,6 +231,14 @@ const Profile = () => {
                     >
                       My Bookings
                     </Button>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => navigate("/my-wishlist")}
+                      className="w-full"
+                    >
+                      Saved Experiences / Wishlist
+                    </Button>
                     {user?.role !== "admin" && (
                       <Button
                         variant="outline"

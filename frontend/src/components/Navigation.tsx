@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Mountain, Menu, X, User, Moon, Sun } from "lucide-react";
+import { Mountain, Menu, X, User, Moon, Sun, Heart } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "next-themes";
@@ -138,6 +138,20 @@ const Navigation = () => {
             {isAuthenticated && (
               <NotificationsMenu className={themeButtonClassName} />
             )}
+            {isAuthenticated && (
+              <Button
+                asChild
+                variant="ghost"
+                size="icon"
+                className={themeButtonClassName}
+                aria-label="My Wishlist"
+                title="My Wishlist"
+              >
+                <Link to="/my-wishlist">
+                  <Heart className="w-4 h-4" />
+                </Link>
+              </Button>
+            )}
             {isAuthenticated ? (
               <Button asChild variant="adventure" size="sm">
                 <Link to="/profile">
@@ -216,6 +230,14 @@ const Navigation = () => {
                 {resolvedTheme === "dark" ? "Light theme" : "Dark theme"}
               </Button>
               {isAuthenticated && <NotificationsMenu mobile />}
+              {isAuthenticated && (
+                <Button asChild variant="outline" size="sm" className="w-full justify-start">
+                  <Link to="/my-wishlist" onClick={() => setIsMenuOpen(false)}>
+                    <Heart className="w-4 h-4 mr-2 text-rose-500" />
+                    Saved Experiences
+                  </Link>
+                </Button>
+              )}
               {isAuthenticated ? (
                 <Button asChild variant="adventure" size="sm" className="w-full">
                   <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
