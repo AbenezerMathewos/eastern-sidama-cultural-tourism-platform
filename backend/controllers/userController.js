@@ -285,3 +285,119 @@ exports.reassignGuideToHost = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+// Wishlist Controllers
+exports.getWishlist = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).populate({
+    path: 'wishlist',
+    select: 'title summary description price priceDiscount duration ratingsAverage ratingsQuantity imageCover maxGuests location status host',
+    populate: {
+      path: 'host',
+      select: 'name email photo'
+    }
+  });
+
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    results: user.wishlist ? user.wishlist.length : 0,
+    data: {
+      wishlist: user.wishlist || []
+    }
+  });
+});
+
+exports.addToWishlist = catchAsync(async (req, res, next) => {
+  const { experienceId } = req.params;
+
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  if (!user.wishlist) {
+    user.wishlist = [];
+  }
+
+  const isAlreadyInWishlist = user.wishlist.some(
+    id => id.toString() === experienceId.toString()
+  );
+
+  if (!isAlreadyInWishlist) {
+    user.wishlist.push(experienceId);
+    await user.save({ validateBeforeSave: false });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Experience added to wishlist',
+    data: {
+      wishlist: user.wishlist
+    }
+  });
+});
+
+exports.removeFromWishlist = catchAsync(async (req, res, next) => {
+  const { experienceId } = req.params;
+
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  if (user.wishlist && user.wishlist.length > 0) {
+    user.wishlist = user.wishlist.filter(
+      id => id.toString() !== experienceId.toString()
+    );
+    await user.save({ validateBeforeSave: false });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Experience removed from wishlist',
+    data: {
+      wishlist: user.wishlist || []
+    }
+  });
+});
+
+exports.toggleWishlist = catchAsync(async (req, res, next) => {
+  const { experienceId } = req.params;
+
+  const user = await User.findById(req.user.id);
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  if (!user.wishlist) {
+    user.wishlist = [];
+  }
+
+  const index = user.wishlist.findIndex(
+    id => id.toString() === experienceId.toString()
+  );
+
+  let inWishlist = false;
+  if (index > -1) {
+    user.wishlist.splice(index, 1);
+    inWishlist = false;
+  } else {
+    user.wishlist.push(experienceId);
+    inWishlist = true;
+  }
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    status: 'success',
+    inWishlist,
+    message: inWishlist ? 'Added to wishlist' : 'Removed from wishlist',
+    data: {
+      wishlist: user.wishlist
+    }
+  });
+});
+
