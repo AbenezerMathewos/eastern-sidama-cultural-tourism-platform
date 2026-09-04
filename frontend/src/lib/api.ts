@@ -259,6 +259,29 @@ export const usersAPI = {
   },
 };
 
+// ================================================
+// Wishlist API
+// ================================================
+export const wishlistAPI = {
+  getWishlist: async () => {
+    const response = await api.get("/users/wishlist");
+    return response.data;
+  },
+  addToWishlist: async (experienceId: string) => {
+    const response = await api.post(`/users/wishlist/${experienceId}`);
+    return response.data;
+  },
+  removeFromWishlist: async (experienceId: string) => {
+    const response = await api.delete(`/users/wishlist/${experienceId}`);
+    return response.data;
+  },
+  toggleWishlist: async (experienceId: string) => {
+    const response = await api.post(`/users/wishlist/toggle/${experienceId}`);
+    return response.data;
+  },
+};
+
+
 
 // ================================================
 // Reviews & Bookings
