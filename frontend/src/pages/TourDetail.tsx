@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import CulturalMap from "@/components/CulturalMap";
+import WeatherWidget from "@/components/WeatherWidget";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -458,6 +459,11 @@ const TourDetail = () => {
                 )}
               </CardContent>
             </Card>
+
+            <WeatherWidget
+              locationName={experience.location || "Eastern Sidama"}
+              className="mt-4 shadow-md"
+            />
           </div>
         </div>
       </main>
