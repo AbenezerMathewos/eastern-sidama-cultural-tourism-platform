@@ -106,6 +106,13 @@ const Navigation = () => {
             }`}>
               Experiences
             </Link>
+            <Link to="/explore" className={`transition-colors font-medium ${
+              isActive("/explore") 
+                ? (isScrolled || !isHomePage || isMobile) ? "text-primary font-semibold" : "text-secondary font-semibold"
+                : (isScrolled || !isHomePage || isMobile) ? "text-foreground hover:text-primary" : "text-primary-foreground hover:text-secondary"
+            }`}>
+              Explore Map
+            </Link>
             <Link to="/about" className={`transition-colors font-medium ${
               isActive("/about") 
                 ? (isScrolled || !isHomePage || isMobile) ? "text-primary font-semibold" : "text-secondary font-semibold"
@@ -200,6 +207,13 @@ const Navigation = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Experiences
+              </Link>
+              <Link 
+                to="/explore" 
+                className={getLinkClassName("/explore")}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Explore Map
               </Link>
               <Link 
                 to="/about" 

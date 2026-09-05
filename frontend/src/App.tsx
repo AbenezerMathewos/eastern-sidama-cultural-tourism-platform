@@ -36,6 +36,7 @@ import Wallet from "./pages/Wallet";
 import MyWithdrawals from "./pages/MyWithdrawals";
 import AdminPayouts from "./pages/AdminPayouts";
 import Wishlist from "./pages/Wishlist";
+import ExploreMap from "./pages/ExploreMap";
 
 const queryClient = new QueryClient();
 
@@ -68,6 +69,8 @@ const App = () => (
               }
             />
             <Route path="/about" element={<About />} />
+            <Route path="/explore" element={<ExploreMap />} />
+            <Route path="/map" element={<ExploreMap />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
