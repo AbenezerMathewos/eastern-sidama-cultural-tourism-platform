@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Mountain, Menu, X, User, Moon, Sun, Heart } from "lucide-react";
+import { Mountain, Menu, X, User, Moon, Sun, Heart, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "next-themes";
 import NotificationsMenu from "@/components/NotificationsMenu";
+import SidamaPhrasebook from "@/components/SidamaPhrasebook";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -142,6 +143,20 @@ const Navigation = () => {
                 <Moon className="w-4 h-4" />
               )}
             </Button>
+            <SidamaPhrasebook
+              triggerButton={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={themeButtonClassName}
+                  aria-label="Sidama Phrasebook"
+                  title="Sidama Phrasebook & Etiquette"
+                >
+                  <BookOpen className="w-4 h-4" />
+                </Button>
+              }
+            />
             {isAuthenticated && (
               <NotificationsMenu className={themeButtonClassName} />
             )}
@@ -243,6 +258,14 @@ const Navigation = () => {
                 )}
                 {resolvedTheme === "dark" ? "Light theme" : "Dark theme"}
               </Button>
+              <SidamaPhrasebook
+                triggerButton={
+                  <Button variant="outline" size="sm" className="w-full justify-start">
+                    <BookOpen className="w-4 h-4 mr-2 text-primary" />
+                    Sidama Phrasebook & Etiquette
+                  </Button>
+                }
+              />
               {isAuthenticated && <NotificationsMenu mobile />}
               {isAuthenticated && (
                 <Button asChild variant="outline" size="sm" className="w-full justify-start">
