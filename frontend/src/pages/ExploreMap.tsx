@@ -4,6 +4,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageHeader from "@/components/PageHeader";
 import CulturalMap from "@/components/CulturalMap";
+import CulturalAudioPlayer from "@/components/CulturalAudioPlayer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -281,6 +282,8 @@ const ExploreMap = () => {
                   );
                 })
               )}
+
+              <CulturalAudioPlayer className="mt-4" />
             </div>
 
             {/* Right Column: Leaflet Map (7 cols on large screens) */}
