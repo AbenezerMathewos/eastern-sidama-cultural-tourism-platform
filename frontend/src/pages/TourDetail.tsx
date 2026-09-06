@@ -2,6 +2,10 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import CulturalMap from "@/components/CulturalMap";
 import WeatherWidget from "@/components/WeatherWidget";
+import CulinaryGuideModal from "@/components/CulinaryGuideModal";
+import CoffeeOriginGuide from "@/components/CoffeeOriginGuide";
+import EcoTourismPledgeModal from "@/components/EcoTourismPledgeModal";
+import TripBudgetCalculator from "@/components/TripBudgetCalculator";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,7 +38,12 @@ import {
   MessageSquare,
   Minus,
   Plus,
-  Star
+  Star,
+  Compass,
+  UtensilsCrossed,
+  Coffee,
+  Calculator,
+  ShieldCheck
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -464,6 +473,49 @@ const TourDetail = () => {
               locationName={experience.location || "Eastern Sidama"}
               className="mt-4 shadow-md"
             />
+
+            <Card className="mt-4 border-border shadow-md">
+              <CardContent className="p-4 space-y-3">
+                <h3 className="font-semibold text-sm text-foreground flex items-center gap-2">
+                  <Compass className="w-4 h-4 text-primary" />
+                  Cultural Discovery & Planning
+                </h3>
+                <div className="grid grid-cols-1 gap-2 pt-1">
+                  <CulinaryGuideModal
+                    triggerButton={
+                      <Button variant="outline" size="sm" className="w-full justify-start text-xs">
+                        <UtensilsCrossed className="w-3.5 h-3.5 mr-2 text-emerald-600 dark:text-emerald-400" />
+                        Sidama Culinary Guide
+                      </Button>
+                    }
+                  />
+                  <CoffeeOriginGuide
+                    triggerButton={
+                      <Button variant="outline" size="sm" className="w-full justify-start text-xs">
+                        <Coffee className="w-3.5 h-3.5 mr-2 text-amber-700 dark:text-amber-500" />
+                        Coffee Terroir Explorer
+                      </Button>
+                    }
+                  />
+                  <TripBudgetCalculator
+                    triggerButton={
+                      <Button variant="outline" size="sm" className="w-full justify-start text-xs">
+                        <Calculator className="w-3.5 h-3.5 mr-2 text-blue-600 dark:text-blue-400" />
+                        Trip Budget Estimator
+                      </Button>
+                    }
+                  />
+                  <EcoTourismPledgeModal
+                    triggerButton={
+                      <Button variant="outline" size="sm" className="w-full justify-start text-xs">
+                        <ShieldCheck className="w-3.5 h-3.5 mr-2 text-emerald-600 dark:text-emerald-400" />
+                        Eco-Tourism Traveler Pledge
+                      </Button>
+                    }
+                  />
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>

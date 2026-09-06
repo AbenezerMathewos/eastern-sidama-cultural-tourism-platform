@@ -13,6 +13,12 @@ Community-Led Cultural Tourism Platform is a full-stack web application develope
 - Tourism information management
 - Search and filtering
 - Personal Wishlist & Saved Experiences (bookmark and manage favorite cultural tours)
+- Interactive Sidama Cultural Festival & Event Calendar (UNESCO Fichee-Chambalaalla, Luwa, Buna Qala)
+- Sidaamu Afoo Phrasebook & Cultural Etiquette Guide
+- Sidama Gastronomy & Enset Culinary Guide with dietary filters
+- Specialty Coffee Terroir & Cupping Profile Guide (Bensa, Aleta Wondo, Dale, Hula)
+- Eco-Tourism & Regenerative Travel Pledge for sustainable tourism
+- Travel Budget & Expense Estimator (ETB, USD, EUR)
 - Responsive design
 - Admin dashboard for managing tourism content
 
