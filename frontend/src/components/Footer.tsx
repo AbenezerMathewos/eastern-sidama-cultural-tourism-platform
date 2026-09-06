@@ -1,5 +1,6 @@
-import { Facebook, Instagram, Mail, Mountain, Twitter } from "lucide-react";
+import { Facebook, Instagram, Mail, Mountain, Twitter, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
+import CulturalFestivalCalendar from "@/components/CulturalFestivalCalendar";
 
 const Footer = () => {
 
@@ -90,6 +91,19 @@ const Footer = () => {
                 >
                   Become a Host
                 </Link>
+              </li>
+              <li>
+                <CulturalFestivalCalendar
+                  triggerButton={
+                    <button
+                      type="button"
+                      className="text-muted-foreground hover:text-primary transition-colors text-sm inline-flex items-center gap-1.5"
+                    >
+                      <Calendar className="w-3.5 h-3.5 text-primary" />
+                      <span>Festival Calendar</span>
+                    </button>
+                  }
+                />
               </li>
             </ul>
           </div>
