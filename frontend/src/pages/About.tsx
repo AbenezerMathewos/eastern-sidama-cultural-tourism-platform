@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Award, Globe, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import CulturalEtiquetteModal from "@/components/CulturalEtiquetteModal";
+import ItineraryModal from "@/components/ItineraryModal";
+import { Map, BookOpen } from "lucide-react";
 
 const About = () => {
   return (
