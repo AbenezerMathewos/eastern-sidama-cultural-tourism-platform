@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import TourCard from "@/components/TourCard";
 import PageHeader from "@/components/PageHeader";
 import CulturalMap from "@/components/CulturalMap";
-import { Loader2, AlertCircle, ChevronLeft, ChevronRight, LayoutGrid, Map as MapIcon } from "lucide-react";
+import TransportationGuideModal from "@/components/TransportationGuideModal";
+import { Loader2, AlertCircle, ChevronLeft, ChevronRight, LayoutGrid, Map as MapIcon, Bus } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { experiencesAPI } from "@/lib/api";
@@ -121,6 +122,15 @@ const Tours = () => {
                     Map View
                   </Button>
                 </div>
+
+                <TransportationGuideModal
+                  triggerButton={
+                    <Button variant="outline" size="sm" className="h-8 text-xs gap-1.5">
+                      <Bus className="w-3.5 h-3.5 text-primary" />
+                      Transit Guide
+                    </Button>
+                  }
+                />
 
                 <div className="flex items-center gap-2">
                   <label htmlFor="sort" className="text-sm text-muted-foreground whitespace-nowrap hidden sm:inline">

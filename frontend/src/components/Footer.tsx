@@ -1,6 +1,7 @@
-import { Facebook, Instagram, Mail, Mountain, Twitter, Calendar } from "lucide-react";
+import { Facebook, Instagram, Mail, Mountain, Twitter, Calendar, Bus } from "lucide-react";
 import { Link } from "react-router-dom";
 import CulturalFestivalCalendar from "@/components/CulturalFestivalCalendar";
+import TransportationGuideModal from "@/components/TransportationGuideModal";
 
 const Footer = () => {
 
