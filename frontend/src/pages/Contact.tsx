@@ -9,8 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, FileText, ShieldAlert, Coins } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import VisaGuideModal from "@/components/VisaGuideModal";
+import TravelerSafetyModal from "@/components/TravelerSafetyModal";
+import CurrencyGuideModal from "@/components/CurrencyGuideModal";
 
 const Contact = () => {
   const [name, setName] = useState("");
