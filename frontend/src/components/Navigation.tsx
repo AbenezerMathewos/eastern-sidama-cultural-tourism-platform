@@ -1,12 +1,13 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Mountain, Menu, X, User, Moon, Sun, Heart, BookOpen, Calendar } from "lucide-react";
+import { Mountain, Menu, X, User, Moon, Sun, Heart, BookOpen, Calendar, Luggage } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useTheme } from "next-themes";
 import NotificationsMenu from "@/components/NotificationsMenu";
 import SidamaPhrasebook from "@/components/SidamaPhrasebook";
 import CulturalFestivalCalendar from "@/components/CulturalFestivalCalendar";
+import PackingChecklistModal from "@/components/PackingChecklistModal";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -172,6 +173,20 @@ const Navigation = () => {
                 </Button>
               }
             />
+            <PackingChecklistModal
+              triggerButton={
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className={themeButtonClassName}
+                  aria-label="Packing Checklist"
+                  title="Sidama Travel Packing Checklist"
+                >
+                  <Luggage className="w-4 h-4" />
+                </Button>
+              }
+            />
             {isAuthenticated && (
               <NotificationsMenu className={themeButtonClassName} />
             )}
@@ -286,6 +301,14 @@ const Navigation = () => {
                   <Button variant="outline" size="sm" className="w-full justify-start">
                     <Calendar className="w-4 h-4 mr-2 text-amber-500" />
                     Festival & Ceremony Calendar
+                  </Button>
+                }
+              />
+              <PackingChecklistModal
+                triggerButton={
+                  <Button variant="outline" size="sm" className="w-full justify-start">
+                    <Luggage className="w-4 h-4 mr-2 text-primary" />
+                    Travel Packing Checklist
                   </Button>
                 }
               />

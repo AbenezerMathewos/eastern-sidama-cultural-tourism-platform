@@ -6,6 +6,7 @@ import CulinaryGuideModal from "@/components/CulinaryGuideModal";
 import CoffeeOriginGuide from "@/components/CoffeeOriginGuide";
 import EcoTourismPledgeModal from "@/components/EcoTourismPledgeModal";
 import TripBudgetCalculator from "@/components/TripBudgetCalculator";
+import PackingChecklistModal from "@/components/PackingChecklistModal";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -43,7 +44,8 @@ import {
   UtensilsCrossed,
   Coffee,
   Calculator,
-  ShieldCheck
+  ShieldCheck,
+  Luggage
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -510,6 +512,14 @@ const TourDetail = () => {
                       <Button variant="outline" size="sm" className="w-full justify-start text-xs">
                         <ShieldCheck className="w-3.5 h-3.5 mr-2 text-emerald-600 dark:text-emerald-400" />
                         Eco-Tourism Traveler Pledge
+                      </Button>
+                    }
+                  />
+                  <PackingChecklistModal
+                    triggerButton={
+                      <Button variant="outline" size="sm" className="w-full justify-start text-xs">
+                        <Luggage className="w-3.5 h-3.5 mr-2 text-indigo-600 dark:text-indigo-400" />
+                        Trip Packing Checklist
                       </Button>
                     }
                   />
