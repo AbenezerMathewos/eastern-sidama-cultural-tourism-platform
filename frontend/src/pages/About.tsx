@@ -1,4 +1,4 @@
-import Footer from "@/components/Footer";
+﻿import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import PageHeader from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,8 @@ import { Award, Globe, Heart, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import CulturalEtiquetteModal from "@/components/CulturalEtiquetteModal";
 import ItineraryModal from "@/components/ItineraryModal";
-import { Map, BookOpen } from "lucide-react";
+import MusicDanceGuideModal from "@/components/MusicDanceGuideModal";
+import { Map, BookOpen, Music } from "lucide-react";
 
 const About = () => {
   return (
@@ -124,6 +125,46 @@ const About = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Cultural Guides Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <h2 className="font-display text-3xl font-bold text-foreground mb-3">
+                Cultural Guides for Travelers
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto text-sm">
+                Deepen your understanding of Sidama culture before you arrive — explore our free visitor guides.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3">
+              <CulturalEtiquetteModal
+                triggerButton={
+                  <Button variant="outline" size="lg" className="gap-2 hover-lift">
+                    <Map className="w-4 h-4 text-primary" />
+                    Cultural Etiquette
+                  </Button>
+                }
+              />
+              <ItineraryModal
+                triggerButton={
+                  <Button variant="outline" size="lg" className="gap-2 hover-lift">
+                    <BookOpen className="w-4 h-4 text-primary" />
+                    Curated Itineraries
+                  </Button>
+                }
+              />
+              <MusicDanceGuideModal
+                triggerButton={
+                  <Button variant="outline" size="lg" className="gap-2 hover-lift">
+                    <Music className="w-4 h-4 text-purple-600" />
+                    Music &amp; Dance Guide
+                  </Button>
+                }
+              />
             </div>
           </div>
         </section>
