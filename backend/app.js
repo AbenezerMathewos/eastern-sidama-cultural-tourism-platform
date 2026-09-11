@@ -124,6 +124,11 @@ app.use('/api/v1/notifications', notificationRouter);
 app.use('/api/v1/experience-guides', experienceGuideApplicationRouter);
 app.use('/api/v1/messages', messageRouter);
 
+// Health-check endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
